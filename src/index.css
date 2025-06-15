@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* 卡片悬停效果 */
+  --card-hover-duration: 0.3s;
+  --card-hover-translate-y: -8px;
+  --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --card-image-hover-scale: 1.05;
+  
+  /* 卡片按钮渐变 */
+  --card-button-gradient-start: theme('colors.primary');
+  --card-button-gradient-end: theme('colors.secondary');
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text-primary;
+    font-family: theme('fontFamily.sans');
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .game-card {
+    @apply relative overflow-hidden rounded-xl bg-white/10 backdrop-blur-sm transition-all duration-[var(--card-hover-duration)];
+  }
+  
+  .game-card:hover {
+    @apply transform translate-y-[var(--card-hover-translate-y)] shadow-[var(--card-hover-shadow)];
+  }
+  
+  .game-card-image {
+    @apply transition-transform duration-[var(--card-hover-duration)];
+  }
+  
+  .game-card:hover .game-card-image {
+    @apply scale-[var(--card-image-hover-scale)];
+  }
+  
+  .game-card-button {
+    @apply bg-gradient-to-r from-[var(--card-button-gradient-start)] to-[var(--card-button-gradient-end)];
+  }
+}
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Animation for floating particles */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Gradient text animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+/* Custom button hover effects */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-glow:hover::before {
+  left: 100%;
+}
+
+/* 游戏卡片动效相关类 */
+.card-hover-transform {
+  transition-property: transform, box-shadow, background;
+  transition-duration: var(--card-hover-duration);
+  transition-timing-function: ease;
+}
+
+.group:hover .card-hover-transform {
+  transform: translateY(var(--card-hover-translate-y));
+  box-shadow: var(--card-hover-shadow);
+}
+
+.card-image-transform {
+  transition: transform var(--card-hover-duration), filter var(--card-hover-duration);
+}
+
+.group:hover .card-image-transform {
+  transform: scale(var(--card-image-hover-scale));
+  filter: brightness(var(--card-hover-brightness)) contrast(var(--card-hover-contrast));
+}
+
+.card-button-gradient {
+  background: var(--card-button-color);
+  transition: background var(--card-hover-duration);
+}
+
+.group:hover .card-button-gradient {
+  background: linear-gradient(to right, var(--card-button-gradient-start), var(--card-button-gradient-end));
+}
